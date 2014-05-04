@@ -171,7 +171,7 @@ static int init ( void )
 
 	if ( g_hOrigDll == NULL )
 	{
-		if ( GetModuleFileName(g_hDllModule, g_szWorkingDirectory, sizeof(g_szWorkingDirectory) - 32) != 0 )
+		if (GetModuleFileName(g_hDllModule, g_szWorkingDirectory, sizeof(g_szWorkingDirectory)-32) != 0)
 		{
 			if ( strrchr(g_szWorkingDirectory, '\\') != NULL )
 				*strrchr( g_szWorkingDirectory, '\\' ) = 0;
@@ -234,11 +234,11 @@ static int init ( void )
 		ini_load();
 		if ( !set.i_have_edited_the_ini_file )
 		{
-			MessageBox( 0, "Looks like you've not edited the .ini file like you were told to!\n""\n"
+			MessageBox(0, "Looks like you've not edited the .ini file like you were told to!\n""\n"
 				"Before you can use mod_sa, you have to set \"i_have_edited_the_ini_file\" to true.\n"
 				"We did this so you would read the INI file to see the configurability of mod_sa.\n",
-				"You're a retard.", 0 );
-			ShellExecute( 0, "open", "notepad", M0D_FOLDER INI_FILE, g_szWorkingDirectory, SW_SHOW );
+				"You're a retard.", 0);
+			ShellExecute(0, "open", "notepad", M0D_FOLDER INI_FILE, g_szWorkingDirectory, SW_SHOW);
 			return 0;
 		}
 
@@ -246,13 +246,13 @@ static int init ( void )
 		getSamp();
 
 		// get actual d3d9.dll and proxy original D3D9Device
-		char	filename[MAX_PATH];
-		GetSystemDirectory( filename, (UINT) (MAX_PATH - strlen("\\d3d9.dll") - 1) );
-		strlcat( filename, "\\d3d9.dll", sizeof(filename) );
-		g_hOrigDll = LoadLibrary( filename );
+		char filename[MAX_PATH];
+		GetSystemDirectory( filename, (UINT)(MAX_PATH - strlen("\\d3d9.dll") - 1));
+		strcat(filename, "\\d3d9.dll");
+		g_hOrigDll = LoadLibrary(filename);
 		if ( g_hOrigDll == NULL )
 		{
-			Log( "Failed to load %s", filename );
+			Log( "Failed to load %s", filename);
 			return 0;
 		}
 		orig_Direct3DCreate9 = ( D3DC9 ) GetProcAddress( g_hOrigDll, "Direct3DCreate9" );

@@ -22,7 +22,8 @@
 #include <vector>
 
 #ifdef WIN32
-    #define va_copy(dest, orig) (dest) = (orig)
+	#undef va_copy
+	#define va_copy(dest, orig) (dest) = (orig)
 #endif
 
 class SString : public std::string

@@ -1044,17 +1044,17 @@ void cheat_handle_actor_fly ( struct actor_info *ainfo, double time_diff )
 					// rotate sideways
 					matTargetRotate.vFront = vecSpeedRotate;
 					rotationAxis = matCamera.vUp;
-					theta = -1.57;
+					theta = (float)-1.57;
 					matTargetRotate = matTargetRotate.Rotate( &rotationAxis, theta );
 					// rotate upward
 					rotationAxis = matCamera.vFront;
 					if (KEY_DOWN(set.key_fly_player_strafeUp))
 					{
-						theta = -0.785;
+						theta = (float)-0.785;
 					}
 					else
 					{
-						theta = -0.05;
+						theta = (float)-0.05;
 					}
 					matTargetRotate = matTargetRotate.Rotate( &rotationAxis, theta );
 					// set the rotation target
@@ -1068,17 +1068,17 @@ void cheat_handle_actor_fly ( struct actor_info *ainfo, double time_diff )
 					// rotate sideways
 					matTargetRotate.vFront = vecSpeedRotate;
 					rotationAxis = matCamera.vUp;
-					theta = 1.57;
+					theta = (float)1.57;
 					matTargetRotate = matTargetRotate.Rotate( &rotationAxis, theta );
 					// rotate upward
 					rotationAxis = matCamera.vFront;
 					if (KEY_DOWN(set.key_fly_player_strafeUp))
 					{
-						theta = 0.785;
+						theta = (float)0.785;
 					}
 					else
 					{
-						theta = 0.05;
+						theta = (float)0.05;
 					}
 					matTargetRotate = matTargetRotate.Rotate( &rotationAxis, theta );
 					// set the rotation target

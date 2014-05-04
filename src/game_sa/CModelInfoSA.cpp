@@ -539,7 +539,8 @@ void CModelInfoSA::RestreamIPL ()
             if ( pEntity->vtbl->DeleteRwObject != 0x00534030 )
             {
                 // Log info
-                OutputDebugString ( SString ( "Entity 0x%08x (with model %d) at ARRAY_StreamSectors[%d,%d] is invalid\n", pEntity, pEntity->m_nModelIndex, i / 2 % NUM_StreamSectorRows, i / 2 / NUM_StreamSectorCols ) );
+				char* sz = (char*)SString("Entity 0x%08x (with model %d) at ARRAY_StreamSectors[%d,%d] is invalid\n", pEntity, pEntity->m_nModelIndex, i / 2 % NUM_StreamSectorRows, i / 2 / NUM_StreamSectorCols).c_str();
+				OutputDebugString(sz);
                 // Assert in debug
                 #if _DEBUG
                     assert ( pEntity->vtbl->DeleteRwObject == 0x00534030 );

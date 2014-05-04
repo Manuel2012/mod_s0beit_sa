@@ -1845,10 +1845,10 @@ void renderPlayerInfoList ( void )
 			break;
 
 		case PLAYER_STATE_DRIVER:
-			_snprintf_s( buf, sizeof(buf)-1, "Name: %s (ID: %d), State: Driver (%s (%d)), VHealth: %d, Distance: %0.2f",
-						 szPlayerName, i, vehicle->name, iVehicleID, iVehicleHealth,
-						 vect3_dist((float *)pos, &self->base.matrix[4 * 3]) );
-			pD3DFont_sampStuff->PrintShadow( width, height, color, buf );
+			_snprintf_s(buf, sizeof(buf)-1, "Name: %s (ID: %d), State: Driver (%s (%d)), VHealth: %d, Distance: %0.2f",
+				szPlayerName, i, vehicle->name, iVehicleID, iVehicleHealth,
+				vect3_dist((float *)pos, &self->base.matrix[4 * 3]));
+			pD3DFont_sampStuff->PrintShadow(width, height, color, buf);
 			break;
 
 		case PLAYER_STATE_PASSENGER:
@@ -2643,7 +2643,7 @@ void renderChat ( void )
 									addMessageToChatWindow( "Port missing. Correct would be: samp://127.0.0.1:7777" );
 							}
 							else
-								ShellExecute( NULL, "open", url_buffer, NULL, NULL, SW_SHOWNORMAL );
+								ShellExecute(NULL, "open", url_buffer, NULL, NULL, SW_SHOWNORMAL);
 						}
 					}
 				}
@@ -3268,11 +3268,11 @@ void texturesInitResources ( IDirect3DDevice9 *pDevice, D3DPRESENT_PARAMETERS *p
 		tNeedlePNG = NULL;
 		sNeedlePNG = NULL;
 		if ( !tSpeedoPNG )
-			D3DXCreateTextureFromFile( pDevice, set.speedometer_speedo_png_filename, &tSpeedoPNG );
+			D3DXCreateTextureFromFile(pDevice, set.speedometer_speedo_png_filename, &tSpeedoPNG);
 		if ( !sSpeedoPNG )
 			D3DXCreateSprite( pDevice, &sSpeedoPNG );
 		if ( !tNeedlePNG )
-			D3DXCreateTextureFromFile( pDevice, set.speedometer_needle_png_filename, &tNeedlePNG );
+			D3DXCreateTextureFromFile(pDevice, set.speedometer_needle_png_filename, &tNeedlePNG);
 		if ( !sNeedlePNG )
 			D3DXCreateSprite( pDevice, &sNeedlePNG );
 		needlePos.x = ( pPresentationParameters->BackBufferWidth / 1024.0f );

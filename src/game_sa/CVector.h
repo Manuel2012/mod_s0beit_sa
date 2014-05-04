@@ -116,7 +116,7 @@ public:
 
 	float GetAngleDegrees ( void )
 	{
-		static float radtodeg = 57.324840764331210191082802547771; // 180/pi
+		static float radtodeg = (float)57.324840764331210191082802547771; // 180/pi
 		float ret = (atan2(fY, -fX) * radtodeg) + 270.0f;
 		if (ret >= 360.0f) ret -= 360.0f;
 		return ret;

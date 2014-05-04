@@ -3071,7 +3071,7 @@ int memcmp_safe ( const void *_s1, const void *_s2, uint32_t len )
 
 void *dll_baseptr_get ( const char *dll_name )
 {
-	return GetModuleHandle( dll_name );
+	return GetModuleHandle(dll_name);
 }
 
 void str_split_free ( struct str_split *split )

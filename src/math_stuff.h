@@ -55,6 +55,4 @@ void	matrix_matrix_mult ( const float in1[16], const float in2[16], float out[16
 void	matrix_vect3_rotate ( const float in[16], const float vect[3], float t, float out[16] );
 void	matrix_vect3_switchXY ( const float in[16], float out[16] );
 void	matrix_identity ( float out[16] );
-float	roundf ( float v );
-
 int		project ( const float in[3], const float model[16], const float proj[16], float out[3] );

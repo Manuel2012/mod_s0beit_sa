@@ -283,7 +283,7 @@ HRESULT CD3DFont::Initialize ( IDirect3DDevice9 *pD3Ddev )
 
 	HFONT	hFont = CreateFont( iHeight, 0, 0, 0, (m_dwCreateFlags & FCR_BOLD) ? FW_BOLD : FW_NORMAL,
 								m_dwCreateFlags & FCR_ITALICS, false, false, DEFAULT_CHARSET, OUT_TT_PRECIS,
-								CLIP_DEFAULT_PRECIS, PROOF_QUALITY, VARIABLE_PITCH, m_szFontName );
+								CLIP_DEFAULT_PRECIS, PROOF_QUALITY, VARIABLE_PITCH, m_szFontName);
 
 	if ( hFont == NULL )
 	{
@@ -309,7 +309,7 @@ HRESULT CD3DFont::Initialize ( IDirect3DDevice9 *pD3Ddev )
 	SIZE	size;
 	char	ch = ' ';
 
-	GetTextExtentPoint32( hDC, &ch, 1, &size );
+	GetTextExtentPoint32(hDC, &ch, 1, &size);
 
 	m_chrSpacing = ( size.cx + 3 ) / 4;
 	m_fChrHeight = (float)( size.cy );
@@ -326,7 +326,7 @@ HRESULT CD3DFont::Initialize ( IDirect3DDevice9 *pD3Ddev )
 	{
 		ch = (char)c;
 
-		GetTextExtentPoint32( hDC, &ch, 1, &size );
+		GetTextExtentPoint32(hDC, &ch, 1, &size);
 		if ( m_dwCreateFlags & FCR_BORDER )
 		{
 			size.cx += 3;
@@ -350,23 +350,23 @@ HRESULT CD3DFont::Initialize ( IDirect3DDevice9 *pD3Ddev )
 			SetTextColor( hDC, RGB(0, 0, 0) );
 			x++;
 			y++;
-			ExtTextOut( hDC, x - 1, y - 1, ETO_CLIPPED, &rect, &ch, 1, NULL );
-			ExtTextOut( hDC, x, y - 1, ETO_CLIPPED, &rect, &ch, 1, NULL );
-			ExtTextOut( hDC, x + 1, y - 1, ETO_CLIPPED, &rect, &ch, 1, NULL );
-			ExtTextOut( hDC, x + 1, y, ETO_CLIPPED, &rect, &ch, 1, NULL );
-			ExtTextOut( hDC, x + 1, y + 1, ETO_CLIPPED, &rect, &ch, 1, NULL );
-			ExtTextOut( hDC, x, y + 1, ETO_CLIPPED, &rect, &ch, 1, NULL );
-			ExtTextOut( hDC, x - 1, y + 1, ETO_CLIPPED, &rect, &ch, 1, NULL );
-			ExtTextOut( hDC, x - 1, y, ETO_CLIPPED, &rect, &ch, 1, NULL );
+			ExtTextOut(hDC, x - 1, y - 1, ETO_CLIPPED, &rect, &ch, 1, NULL);
+			ExtTextOut(hDC, x, y - 1, ETO_CLIPPED, &rect, &ch, 1, NULL);
+			ExtTextOut(hDC, x + 1, y - 1, ETO_CLIPPED, &rect, &ch, 1, NULL);
+			ExtTextOut(hDC, x + 1, y, ETO_CLIPPED, &rect, &ch, 1, NULL);
+			ExtTextOut(hDC, x + 1, y + 1, ETO_CLIPPED, &rect, &ch, 1, NULL);
+			ExtTextOut(hDC, x, y + 1, ETO_CLIPPED, &rect, &ch, 1, NULL);
+			ExtTextOut(hDC, x - 1, y + 1, ETO_CLIPPED, &rect, &ch, 1, NULL);
+			ExtTextOut(hDC, x - 1, y, ETO_CLIPPED, &rect, &ch, 1, NULL);
 			SetTextColor( hDC, RGB(255, 0, 0) );
-			ExtTextOut( hDC, x, y, ETO_CLIPPED, &rect, &ch, 1, NULL );
+			ExtTextOut(hDC, x, y, ETO_CLIPPED, &rect, &ch, 1, NULL);
 			x--;
 			y--;
 		}
 		else
 		{
 			SetTextColor( hDC, RGB(255, 0, 0) );
-			ExtTextOut( hDC, x, y, ETO_CLIPPED, &rect, &ch, 1, NULL );
+			ExtTextOut(hDC, x, y, ETO_CLIPPED, &rect, &ch, 1, NULL);
 		}
 
 		//tu src + dst

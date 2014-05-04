@@ -463,12 +463,12 @@ uint32_t getSampAddress ()
 	{
 		if ( set.wine_compatibility )
 		{
-			HMODULE temp = LoadLibrary( SAMP_DLL );
+			HMODULE temp = LoadLibrary(SAMP_DLL);
 			__asm mov samp_dll, eax
 		}
 		else
 		{
-			void	*temp = dll_baseptr_get( SAMP_DLL );
+			void	*temp = dll_baseptr_get((const char*)SAMP_DLL);
 			__asm mov samp_dll, eax
 		}
 	}

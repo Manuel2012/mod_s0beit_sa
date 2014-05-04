@@ -302,8 +302,3 @@ void matrix_identity ( float out[16] )
 
 	matrix_copy( id, out );
 }
-
-float roundf ( float v )
-{
-	return floorf( v + 0.5f );
-}

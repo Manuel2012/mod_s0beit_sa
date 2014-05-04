@@ -73,7 +73,7 @@ void *CDetour::Create ( char *dllName, char *apiName, const BYTE *det, int iPatc
 		return 0;
 
 	// Get the API address
-	m_hModule = GetModuleHandle( dllName );
+	m_hModule = GetModuleHandle(dllName);
 	m_dwAddress = ( DWORD ) GetProcAddress( m_hModule, apiName );
 
 	if ( !m_dwAddress || !det )
@@ -253,7 +253,7 @@ bool CDetour::Remove ( char *dllName, char *apiName, BYTE *jmp, int iPatchType, 
 	int		iMinLen = 0;
 
 	// Get the API address
-	m_hModule = GetModuleHandle( dllName );
+	m_hModule = GetModuleHandle(dllName);
 	m_dwAddress = ( DWORD ) GetProcAddress( m_hModule, apiName );
 
 	if ( !m_dwAddress || !jmp )
