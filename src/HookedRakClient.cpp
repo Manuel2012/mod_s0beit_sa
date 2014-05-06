@@ -58,7 +58,7 @@ Packet* HookedRakClientInterface::Receive( void )
 {
 	traceLastFunc( "HookedRakClientInterface::Receive" );
 
-	return g_RakClient->GetRakClientInterface()->Receive();
+	return g_RakClient->GetRakClientInterface()->Receive();	
 }
 
 void HookedRakClientInterface::DeallocatePacket( Packet *packet )

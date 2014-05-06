@@ -1742,11 +1742,13 @@ uint8_t _declspec ( naked ) hook_handle_rpc_packet2 ( void )
 }
 
 #define FUNC_CNETGAMEDESTRUCTOR			0x85E0
-void __stdcall CNetGame__destructor( void )
+void __stdcall CNetGame__destructor(void)
 {
 	// release hooked rakclientinterface, restore original rakclientinterface address and call CNetGame destructor
-	if ( g_SAMP->pRakClientInterface != NULL )
-		delete g_SAMP->pRakClientInterface; 
+	if (g_SAMP->pRakClientInterface != NULL)
+	{
+		delete g_SAMP->pRakClientInterface;
+	}
 	g_SAMP->pRakClientInterface = g_RakClient->GetRakClientInterface();
 	return ( ( void ( __thiscall * ) ( void * ) ) ( g_dwSAMP_Addr + FUNC_CNETGAMEDESTRUCTOR ) )( g_SAMP );
 }

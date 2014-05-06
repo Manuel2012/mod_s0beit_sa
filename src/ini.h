@@ -131,18 +131,6 @@ struct settings
 
 	int						key_nitro;
 
-#ifdef __CHEAT_VEHRECORDING_H__
-	int						recording_activated;
-	float					recording_maxDistToEntryPoint;
-	float					recording_play_customSpeed;
-	int						key_recording_record;
-	int						key_recording_continueAfterFinish;
-	int						key_recording_play;
-	int						key_recording_customSpeed;
-	int						key_recording_rev;
-	int						key_recording_rev_customSpeed;
-#endif
-
 	//int					teleport_slow;
 	//int					key_slowTeleport_stop;
 	int						key_teleport_hist;

@@ -50,11 +50,6 @@
 #define ID_MENU_HUDINDICATORS	22
 #define ID_MENU_INTERIORS		23
 
-#ifdef __CHEAT_VEHRECORDING_H__
-#define ID_MENU_ROUTES			26
-#define ID_MENU_ROUTES_LOAD		27
-#define ID_MENU_ROUTES_DROP		28
-#endif
 
 #define ID_CHEAT_INVULN						10
 #define ID_CHEAT_WEAPONS					20
@@ -150,12 +145,6 @@
 #define ID_DEBUG_SAMP_KILL_INFO				9
 #define ID_DEBUG_SAMP_VEHICLE_LIST			10
 #define ID_DEBUG_SAMP_LOCAL_SAMPPED			11
-
-#ifdef __CHEAT_VEHRECORDING_H__
-#define ID_ROUTES_ACTIVATED					0
-#define ID_ROUTES_WRITE						1
-#define ID_ROUTES_OPTIMIZE					2
-#endif
 
 #define ID_HUDIND_BAR						0
 #define ID_HUDIND_TSHADOWS					1
@@ -725,60 +714,6 @@ static void menu_playermute_populate ( struct menu *menu )
 	}
 }
 
-#ifdef __CHEAT_VEHRECORDING_H__
-static void menu_routes_drop_populate ( struct menu *menu )
-{
-	menu_items_free( menu );
-
-	// now get me some data from the database
-	char table_name_[64];
-	char *table_name;
-	int num_tables = rec_sqlite_getNumTables();
-
-	if ( num_tables <= 0 )
-	{
-		menu_item_add( menu, NULL, (num_tables < 0) ? "Error Reading Database" : "No Saved Routes", ID_NONE, 
-			MENU_COLOR_DEFAULT, NULL );
-		return;
-	}
-
-	for ( int i = 0; i < num_tables; i++ )
-	{
-		table_name = rec_sqlite_getTableName(i);
-		if ( table_name == NULL )
-			continue;
-
-		// remember to change menu_callback_routes_drop, if you change the "Delete" text
-		_snprintf_s( table_name_, sizeof(table_name_)-1, "Delete '%s'", table_name );
-		menu_item_add( menu, NULL, table_name_, i, MENU_COLOR_DEFAULT, NULL );
-	}
-}
-
-static void menu_routes_load_populate ( struct menu *menu )
-{
-	menu_items_free( menu );
-
-	// now get me some data from the database
-	int num_tables = rec_sqlite_getNumTables();
-	char *table_name;
-
-	if ( num_tables <= 0 )
-	{
-		menu_item_add( menu, NULL, (num_tables < 0) ? "Error Reading Database" : "No Saved Routes", ID_NONE, 
-			MENU_COLOR_DEFAULT, NULL );
-		return;
-	}
-
-	for ( int i = 0; i < num_tables; i++ )
-	{
-		table_name = rec_sqlite_getTableName(i);
-		if ( table_name == NULL )
-			continue;
-		menu_item_add( menu, NULL, table_name, i, MENU_COLOR_DEFAULT, NULL );
-	}
-}
-#endif
-
 // called when a menu is going to be displayed
 static void menu_event_activate ( struct menu *menu )
 {
@@ -834,16 +769,6 @@ static void menu_event_activate ( struct menu *menu )
 	case ID_MENU_PLAYERS_MUTE:
 		menu_playermute_populate( menu );
 		break;
-
-#ifdef __CHEAT_VEHRECORDING_H__
-	case ID_MENU_ROUTES_DROP:
-		menu_routes_drop_populate( menu );
-		break;
-
-	case ID_MENU_ROUTES_LOAD:
-		menu_routes_load_populate( menu );
-		break;
-#endif
 	}
 }
 
@@ -1945,78 +1870,6 @@ static int menu_callback_misc ( int op, struct menu_item *item )
 	return 0;
 }
 
-#ifdef __CHEAT_VEHRECORDING_H__
-static int menu_callback_routes_drop ( int op, struct menu_item *item )
-{
-	if ( op == MENU_OP_SELECT )
-	{
-		if ( item->id == ID_NONE )
-			return 1;
-
-		// > 9, because "Delete '.'"
-		if ( item->name != NULL && strlen(item->name) > 9 )
-		{
-			// Remove "Delete '%s'"
-			char tableName[64];
-			_snprintf_s( tableName, sizeof(tableName)-1, "%s", (item->name+8) );
-			tableName[ (strlen(item->name)-9) ] = NULL; // remove the last '
-			rec_sqlite_dropTable( tableName );
-
-			// reload menu
-			if ( item->menu != NULL )
-				menu_routes_drop_populate( item->menu );
-			return 1;
-		}
-	}
-	return 0;
-}
-
-static int menu_callback_routes_load ( int op, struct menu_item *item )
-{
-	if ( op == MENU_OP_SELECT )
-	{
-		if ( item->id == ID_NONE )
-			return 1;
-
-		if ( item->name != NULL && strlen(item->name) > 0 )
-		{
-			rec_sqlite_loadTable( (char*)item->name );
-			return 1;
-		}
-	}
-	return 0;
-}
-
-static int menu_callback_routes ( int op, struct menu_item *item )
-{
-	if ( op == MENU_OP_ENABLED )
-	{
-		if ( item->id == ID_ROUTES_ACTIVATED )
-			return set.recording_activated;
-		return 0;
-	}
-	if ( op == MENU_OP_SELECT )
-	{
-		switch ( item->id )
-		{
-		case ID_ROUTES_ACTIVATED:
-			set.recording_activated ^= 1;
-			break;
-		case ID_ROUTES_WRITE:
-			rec_sqlite_writeTable();
-			break;
-		case ID_ROUTES_OPTIMIZE:
-			rec_sqlite_optimizeDatabase();
-			break;
-		default:
-			return 0;
-		}
-		return 1;
-	}
-	return 0;
-}
-#endif
-
 static int menu_callback_sampmisc ( int op, struct menu_item *item )
 {
 	if ( g_SAMP == NULL )
@@ -2968,9 +2821,6 @@ void menu_maybe_init ( void )
 		menu_cheats_weather, *menu_cheats_time, *menu_weapons, *menu_vehicles, *menu_teleports, *menu_interiors, *
 			menu_misc, *menu_debug, *menu_hudindicators, *menu_patches, *menu_players, *menu_servers, *
 				menu_players_warp, *menu_players_vehwarp, *menu_players_spec,
-#ifdef __CHEAT_VEHRECORDING_H__
-	*menu_routes, *menu_routes_load, *menu_routes_drop, 
-#endif
 
 	//*menu_cheats_handling,
 	*menu_player_info, *menu_players_mute, *menu_sampmisc, *menu_spoof_weapon, *menu_fake_kill, *menu_vehicles_instant, 
@@ -3005,13 +2855,6 @@ void menu_maybe_init ( void )
 	/* main menu -> misc */
 	menu_debug = menu_new( menu_misc, ID_MENU_DEBUG, menu_callback_debug );
 	menu_hudindicators = menu_new( menu_misc, ID_MENU_HUDINDICATORS, menu_callback_hudindicators );
-#ifdef __CHEAT_VEHRECORDING_H__
-	menu_routes = menu_new( menu_misc, ID_MENU_ROUTES, menu_callback_routes );
-
-	/* main menu -> misc -> routes */
-	menu_routes_load = menu_new( menu_routes, ID_MENU_ROUTES_LOAD, menu_callback_routes_load );
-	menu_routes_drop = menu_new( menu_routes, ID_MENU_ROUTES_DROP, menu_callback_routes_drop );
-#endif
 
 	/* samp specific */
 	if ( g_dwSAMP_Addr != NULL )
@@ -3302,9 +3145,6 @@ void menu_maybe_init ( void )
 	snprintf( name, sizeof(name), "FPS limit: %d", set.fps_limit );
 	menu_item_add( menu_misc, NULL, name, ID_MISC_FPSLIMIT, MENU_COLOR_DEFAULT, NULL );
 	menu_item_add( menu_misc, NULL, "Toggle windowed mode", ID_MISC_TOGGLEWINDOWED, MENU_COLOR_DEFAULT, NULL );
-#ifdef __CHEAT_VEHRECORDING_H__
-	menu_item_add( menu_misc, menu_routes, "Routes", ID_NONE, MENU_COLOR_DEFAULT, NULL );
-#endif
 
 	/* misc -> debug */
 	menu_item_add( menu_debug, NULL, "Enable", ID_DEBUG_ENABLE, MENU_COLOR_DEFAULT, NULL );
@@ -3323,15 +3163,6 @@ void menu_maybe_init ( void )
 		menu_item_add( menu_debug, NULL, "SA:MP Kill info", ID_DEBUG_SAMP_KILL_INFO, MENU_COLOR_DEFAULT, NULL );
 		menu_item_add( menu_debug, NULL, "SA:MP Local SAMP-PED", ID_DEBUG_SAMP_LOCAL_SAMPPED, MENU_COLOR_DEFAULT, NULL );
 	}
-
-#ifdef __CHEAT_VEHRECORDING_H__
-	/* misc -> routes */
-	menu_item_add( menu_routes, NULL, "Enable Routes function", ID_ROUTES_ACTIVATED, MENU_COLOR_DEFAULT, NULL );
-	menu_item_add( menu_routes, menu_routes_load, "Load Route", ID_NONE, MENU_COLOR_DEFAULT, NULL );
-	menu_item_add( menu_routes, menu_routes_drop, "Delete Route", ID_NONE, MENU_COLOR_DEFAULT, NULL );
-	menu_item_add( menu_routes, NULL, "Save current Route", ID_ROUTES_WRITE, MENU_COLOR_DEFAULT, NULL );
-	menu_item_add( menu_routes, NULL, "Optimize Database (Rebuild)", ID_ROUTES_OPTIMIZE, MENU_COLOR_DEFAULT, NULL );
-#endif
 
 	// misc -> HUD indicators
 	menu_item_add( menu_hudindicators, NULL, "Draw bottom bar", ID_HUDIND_BAR, MENU_COLOR_DEFAULT, NULL );

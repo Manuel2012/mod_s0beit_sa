@@ -161,9 +161,6 @@ static void cheat_main_vehicle ( double time_diff )
 	cheat_handle_vehicle_repair_car( info, time_diff );
 	cheat_handle_vehicle_spiderWheels( info, time_diff );
 	//cheat_handle_vehicle_slowTeleport( info, time_diff );
-#ifdef __CHEAT_VEHRECORDING_H__
-	cheat_handle_vehicle_recording( info, time_diff );
-#endif
 
 	// these NEED to stay last, because they can remove the player from the vehicle
 	cheat_handle_vehicle_fast_exit( info, time_diff );

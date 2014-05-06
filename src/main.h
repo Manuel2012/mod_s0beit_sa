@@ -32,10 +32,6 @@
 #define SAMP_VERSION	"SA:MP 0.3z"
 #define M0D_DEV_ADVANCEDINFO
 
-// Use this to activate the SQLite Vehicle Recording.
-// You'll need the SQLite libs. Check sqlite3/readme.txt for help.
-//#define __CHEAT_VEHRECORDING_H__
-
 #define BP _asm int 3
 #define NAME ""M0D_NAME """ "M0D_VERSION ""
 
@@ -197,10 +193,6 @@
 #include "cheat_actor.h"
 #include "cheat_vehicle.h"
 #include "cheat_hookers.h"
-#ifdef __CHEAT_VEHRECORDING_H__
-#include "sqlite3/sqlite3.h"
-#include "cheat_vehRecording.h"
-#endif
 #include "dumb_menu.h"
 #include "samp.h"
 #include "debug_classify.h"
